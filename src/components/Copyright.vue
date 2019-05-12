@@ -11,7 +11,7 @@
             </div>
         </el-col>
         <el-col :span="6" :offset="14">
-            <div>© 2019 lativ</div>
+            <div>© 2019 XIXI</div>
         </el-col>
     </el-row>
 </template>

@@ -24,14 +24,14 @@
 //     }
 // }
 const AV = require('leancloud-storage');
-const APP_ID = 'xbw5yxoGzsf4XvBxqT1SuHuh-gzGzoHsz';
-const APP_KEY = 'VcyNlPKWStifLVFHJLIWQFqv';
-
-
-AV.init({
-    appId: APP_ID,
-    appKey: APP_KEY
-});
+// const APP_ID = 'xbw5yxoGzsf4XvBxqT1SuHuh-gzGzoHsz';
+// const APP_KEY = 'VcyNlPKWStifLVFHJLIWQFqv';
+//
+//
+// AV.init({
+//     appId: APP_ID,
+//     appKey: APP_KEY
+// });
 
 const user = new AV.User();
 let username = 'xhzdcyy';
@@ -51,8 +51,11 @@ export default {
     logout() {
         return AV.User.logOut();
     },
-    getInfo(){
-        return AV.User.current()
+    getInfo() {
+        let current = AV.User.current();
+        console.log(current);
+        if(current&&current.attributes)current.attributes.id = current.id;
+        return current
     }
 
 }

@@ -26,6 +26,8 @@
 </script>
 
 <style lang="scss">
-
+    .el-carousel__container {
+        margin: 0 auto;
+    }
 
 </style>

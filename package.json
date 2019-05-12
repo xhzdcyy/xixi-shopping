@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "alipay-mobile": "^3.0.9",
     "axios": "^0.18.0",
     "element-ui": "^2.6.1",
     "leancloud-storage": "^3.12.0",

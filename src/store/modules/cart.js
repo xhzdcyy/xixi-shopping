@@ -1,4 +1,5 @@
 import shop from '../../api/shop'
+import { Message } from 'element-ui';
 
 // initial state
 // shape: [{ id, quantity }]
@@ -10,12 +11,17 @@ const state = {
 // getters
 const getters = {
     cartProducts: (state, getters, rootState) => {
-        return state.items.map(({ id, quantity }) => {
+        // console.log('item',state.items);
+        // console.log('length',state.items.length);
+        return state.items.map(({ id, quantity,size }) => {
             const product = rootState.products.all.find(product => product.id === id)
             return {
+                id:product.id,
                 title: product.title,
                 price: product.price,
-                quantity
+                url:product.productImageUrl,
+                quantity,
+                size
             }
         })
     },
@@ -40,32 +46,49 @@ const actions = {
             () => {
                 commit('setCheckoutStatus', 'failed')
                 // rollback to the cart saved before sending the request
-                commit('setCartItems', { items: savedCartItems })
+                commit('setCartItems', { items: savedCartItems });
+
             }
         )
     },
 
-    addProductToCart ({ state, commit }, product) {
+    addProductToCart ({ state, commit }, product,) {
         commit('setCheckoutStatus', null)
+        console.log('add');
+        console.log(product);
         if (product.inventory > 0) {
+            // console.log(product.inventory);
+            // console.log('in');
             const cartItem = state.items.find(item => item.id === product.id)
             if (!cartItem) {
-                commit('pushProductToCart', { id: product.id })
+                // console.log('add',size);
+                commit('pushProductToCart', { id: product.id ,size:product.size})
             } else {
                 commit('incrementItemQuantity', cartItem)
             }
             // remove 1 item from stock
             commit('products/decrementProductInventory', { id: product.id }, { root: true })
+            Message.success({
+                message:'添加成功'
+            })
+            // Message({
+            //     type: 'success'
+            // });
+            console.log('added');
+
         }
-    }
+    },
+
 }
 
 // mutations
 const mutations = {
-    pushProductToCart (state, { id }) {
+    pushProductToCart (state, { id,size }, ) {
+        // console.log('push',size);
         state.items.push({
             id,
-            quantity: 1
+            quantity: 1,
+            size
         })
     },
 
@@ -73,6 +96,11 @@ const mutations = {
         const cartItem = state.items.find(item => item.id === id)
         cartItem.quantity++
     },
+    decrementItemQuantity (state, { id }) {
+        const cartItem = state.items.find(item => item.id === id)
+        cartItem.quantity--
+    },
+
 
     setCartItems (state, { items }) {
         state.items = items
@@ -80,7 +108,12 @@ const mutations = {
 
     setCheckoutStatus (state, status) {
         state.checkoutStatus = status
-    }
+    },
+    deleteProductFromCart(state, { id }) {
+        let index = state.items.findIndex(item => item.id === id)
+        console.log(index);
+        state.items.splice(index,1);
+    },
 }
 
 export default {

@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './views/Index'
+import auth from './api/auth'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -14,9 +15,6 @@ export default new Router({
     {
       path: '/WOMEN',
       name: 'women',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Women.vue'),
     },
     {
@@ -34,10 +32,73 @@ export default new Router({
     {
       path:'/upload',
       component: () => import(/* webpackChunkName: "about" */ './views/Upload.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path:'/test',
       component: () => import(/* webpackChunkName: "about" */ './views/Test.vue'),
     },
+    {
+      path:'/orders',
+      component: () => import(/* webpackChunkName: "about" */ './views/Orders.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path:'/cart',
+      component: () => import(/* webpackChunkName: "about" */ './components/Cart.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path:'/shoppingcart',
+      component: () => import(/* webpackChunkName: "about" */ './components/ShoppingCart.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path:'/productlist/:type',
+      component: () => import(/* webpackChunkName: "about" */ './components/ProductList.vue'),
+    },
+    {
+      path:'/productlist',
+      component: () => import(/* webpackChunkName: "about" */ './components/ProductList.vue'),
+    },
+    {
+      path:'/comment/:productId',
+      component: () => import(/* webpackChunkName: "about" */ './components/Comment.vue'),
+    },
+    {
+      path:'/evaluate/:orderId',
+      component: () => import(/* webpackChunkName: "about" */ './components/Evaluate.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path:'/order/:orderId',
+      component: () => import(/* webpackChunkName: "about" */ './components/Order.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path:'/user',
+      component: () => import(/* webpackChunkName: "about" */ './views/User.vue'),
+      meta: { requiresAuth: true }
+    },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!auth.getInfo()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
+
+
+export default router;

@@ -1,8 +1,8 @@
 <template>
     <el-container>
-        <el-aside width="200px">
-            <Aside></Aside>
-        </el-aside>
+        <!--<el-aside width="200px">-->
+            <!--<Aside></Aside>-->
+        <!--</el-aside>-->
         <el-main>
 
             <Display></Display>

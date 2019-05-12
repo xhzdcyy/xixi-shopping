@@ -46,8 +46,9 @@ const actions = {
         if (state.isLogin) return true
         let res = await auth.getInfo()
         console.log('res',res)
+         if (!res) return false
         commit('setLogin', {isLogin: true})
-        // if (!res.isLogin) return false
+
         // console.log(res);
         commit('setUser', {user: res.attributes})
         return true
