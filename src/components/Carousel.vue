@@ -1,9 +1,17 @@
 <template>
     <el-carousel :interval="5000" arrow="always">
-        <el-carousel-item v-for="item in imgs" :key="item">
-            <!--<h3>{{ item }}</h3>-->
-            <!--<img :src=item :alt=item>-->
-            <img src='../assets/Carousel1.jpg' :alt=item>
+        <el-carousel-item >
+            <router-link to="/productlist/WOMEN"><img src='../assets/c1.jpg' >
+            </router-link>
+        </el-carousel-item>
+        <el-carousel-item >
+            <router-link to="/productlist/ALL"><img src='../assets/c2.jpg' >
+            </router-link>
+        </el-carousel-item>
+        <el-carousel-item >
+            <router-link to="/productlist/MEN"><img src='../assets/Carousel2.jpg' >
+            </router-link>
+
         </el-carousel-item>
     </el-carousel>
 </template>

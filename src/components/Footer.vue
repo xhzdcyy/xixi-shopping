@@ -2,9 +2,10 @@
     <el-row :gutter="20">
         <el-col :span="6">
             <div>
-                关于lativ
+                <span>关于XIXI</span>
                 <br>
-                了解lativ
+                <br>
+                了解XIXI
                 <br>
                 服务通知
                 <br>
@@ -13,8 +14,10 @@
         </el-col>
         <el-col :span="6">
             <div>
-                帮助中心
+                <span>帮助中心</span>
                 <br>
+                <br>
+
                 支付方式
                 <br>
                 配送方式
@@ -24,18 +27,17 @@
         </el-col>
         <el-col :span="6">
             <div>
-                微信公众号
+               <span>微信公众号</span>
                 <br>
-                了解lativ
                 <br>
-                服务通知
-                <br>
-                品牌日志
+                <img src="../assets/wechat.gif" alt="wechat">
+
             </div>
         </el-col>
         <el-col :span="6">
             <div>
-                021-6151-5750
+                <span> 021-6151-5750</span>
+                <br>
                 <br>
                 周一至周五
                 <br>
@@ -49,15 +51,19 @@
 
     </el-row>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
     .el-row {
-        margin-bottom: 20px;
+        margin: 20px 0;
         &:last-child {
             margin-bottom: 0;
         }
     }
     .el-col {
         border-radius: 4px;
+        font-family: "Verdana","Microsoft Yahei" !important;
+        & span{
+            font-size: 20px;
+        }
     }
     .bg-purple-dark {
         background: #99a9bf;
